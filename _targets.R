@@ -46,21 +46,25 @@ if (!fs::file_exists("data.zip")) {
 
 list(
   # make the zipdata object refer to the data.zip file path
-  tar_target(zipdata, "data.zip", format = "file")
+  tar_target(zipdata, "data.zip", format = "file"),
 
   # TODO: Something related to zip should be added here:
-  # And this comment should be replaced by something more useful
+  # Unzip the downloaded dataset and return the extracted file names
+  tar_target(csv_files, zip::unzip(zipdata))
+)
 
   # TODO: uncomment this section when instructed
-  # tar_map(
-  #  values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
-  #    dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
-  #  tar_target(dt, fread(path)),
-  #  names = name,
-  #  descriptions = NULL
+#tar_map is creating a target for each file and gives it a good name, then it loads the files
+#as dataset in R
+  #tar_map(
+  #values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
+     # dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
+    #tar_target(dt, fread(path)),
+   # names = name,
+   # descriptions = NULL
   #),
 
   # TODO: something related to codebook should be added here
 
   # TODO: Something related to data_scans should be added here
-)
+
