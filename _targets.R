@@ -70,7 +70,41 @@ list(
    descriptions = NULL
   )
 
+
+#extra things we did in between
+#tar_load(dt_patients)
+#View(dt_patients)
+
+#tar_source()
+#get_codebook()
+#What is the result? What can it be used for? 
+# Answer: it is describing the datasets, can understand the variables, what types they are if they is any missing values etc?
+
   # TODO: something related to codebook should be added here
+## Run the get_codebook() function and save the result as a target called codebook
+
+tar_target(codebook, get_codebook())
+#after this we did tar_make() again to add the codebook as a target in the pipeline?
+
+## Copied from instruction: 
+tar_load(codebook)
+cb_patients <- codebook[file == "patients.csv"]
+# Which columns are relevant for `patients`?
+cb_patients[, column_name]
+# Well, those columns don't actually match the column names used in the data!
+# Do they?
+names(dt_patients)
+# Do you notice a pattern in how the names differ?  #Answer: they differ in big or small letters
+# Let's fix that
+cb_patients[, column_name := tolower(column_name)]
+# Do we have any variables which are not documented?
+setdiff(names(dt_patients), cb_patients[, column_name]) # Non-documented
+# Yep, so let's fix that manually for now
+cb_patients[, column_name := gsub(" county code", "", column_name)]
+
+#Are there any additional columns from other datasets which are not described correctly by the
+#codebook? Answer: no becuase setdiff returns 0?
+
 
   # TODO: Something related to data_scans should be added here
 

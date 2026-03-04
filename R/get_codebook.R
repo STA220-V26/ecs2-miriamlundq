@@ -1,3 +1,5 @@
+
+#gives us a codebook describing the datasets and their variables 
 get_codebook <- function() {
   tabs <-
     "https://github.com/synthetichealth/synthea/wiki/CSV-File-Data-Dictionary" |>
@@ -17,6 +19,7 @@ get_codebook <- function() {
           dplyr::na_if(x, "")
         })) |>
         dplyr::mutate(
+          column_name = tolower(column_name), #makes the variables to lowercase
           required = as.logical(required),
           key = factor(key, c("🔑", "🗝️"), c("primary", "foreign"))
         ) |>
