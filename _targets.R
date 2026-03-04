@@ -27,7 +27,10 @@ tar_option_set(
 )
 
 # Run the R scripts stored in the R/ folder where your have stored your custom functions:
+#reads everything under R folder
 tar_source()
+
+#tar_vistnetwork : if we want to get a visualization about what need to be updated
 
 # We first download the data health care data of interest
 if (!fs::file_exists("data.zip")) {
@@ -53,16 +56,19 @@ list(
   tar_target(csv_files, zip::unzip(zipdata))
 )
 
+
+
+
   # TODO: uncomment this section when instructed
 #tar_map is creating a target for each file and gives it a good name, then it loads the files
 #as dataset in R
-  #tar_map(
-  #values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
-     # dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
-    #tar_target(dt, fread(path)),
-   # names = name,
-   # descriptions = NULL
-  #),
+  tar_map(
+  values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
+     dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
+    tar_target(dt, fread(path)),
+   names = name,
+   descriptions = NULL
+  )
 
   # TODO: something related to codebook should be added here
 
