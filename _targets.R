@@ -108,3 +108,4 @@ cb_patients[, column_name := gsub(" county code", "", column_name)]
 
   # TODO: Something related to data_scans should be added here
 
+tar_target(data_scan_patient, export_data_scan(dt_patients, "patients"), format = "file")
